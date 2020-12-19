@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Models;
+
+use App\Concerns\Filterable;
+use App\Dictionaries\TaskStatusDictionary;
+use ElemenX\ApiPagination\Paginatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rule;
+
+class Task extends Model
+{
+    use Paginatable;
+    use Filterable;
+
+    public static function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:65535',
+            'status' => [Rule::in(TaskStatusDictionary::getAll())],
+            'category_id' => 'nullable|int|exists:category,id'
+        ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+}

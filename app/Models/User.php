@@ -14,6 +14,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable, HasFactory;
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

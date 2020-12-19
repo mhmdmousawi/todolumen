@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.3|^8.0",
+        "elemenx/laravel-api-pagination": "^0.1.6",
         "laravel/lumen-framework": "^8.0",
         "spatie/data-transfer-object": "^1.13",
         "thedevsaddam/lumen-route-list": "^2.0",

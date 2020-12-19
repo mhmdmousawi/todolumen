@@ -11,16 +11,14 @@ class Controller extends BaseController
 {
     protected function respondWithToken($token)
     {
-        return response()->json([
-            'token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => Auth::factory()->getTTL() * 60
-        ], Response::HTTP_OK);
-    }
-
-    protected function view($data = null, int $statusCode = null, array $headers = []): JsonResponse
-    {
-        return response()->json($data, $statusCode, $headers);
+        return $this->view(
+            [
+                'token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => Auth::factory()->getTTL() * 60
+            ],
+            Response::HTTP_OK
+        );
     }
 
     protected function createGenericErrorView(
@@ -35,5 +33,10 @@ class Controller extends BaseController
         ];
 
         return $this->view($error, $statusCode, $headers);
+    }
+
+    protected function view($data = null, int $statusCode = null, array $headers = []): JsonResponse
+    {
+        return response()->json($data, $statusCode, $headers);
     }
 }

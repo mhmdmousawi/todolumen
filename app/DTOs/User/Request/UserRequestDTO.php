@@ -37,6 +37,35 @@ class UserRequestDTO extends DataTransferObject
      */
     public $birthday;
 
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function getMobileNumber(): ?int
+    {
+        return $this->mobileNumber;
+    }
+
+    public function getBirthday(): ?int
+    {
+        return $this->birthday;
+    }
 
     public static function fromRequest(Request $request): self
     {

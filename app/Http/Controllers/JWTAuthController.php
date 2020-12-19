@@ -37,7 +37,7 @@ class JWTAuthController extends Controller
             'lastName' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
-            'birthday' => 'int'
+            'birthday' => 'nullable|int'
         ]);
         $userRequestDTO = UserRequestDTO::fromRequest($request);
 

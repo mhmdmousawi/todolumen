@@ -6,8 +6,10 @@ use Laravel\Lumen\Routing\Router;
 $router->group([
     'middleware' => 'auth',
 ], function() use ($router) {
-
-//        $router->get('tasks', 'TasksController@list');
+        $router->get('tasks', 'TasksController@list');
+        $router->get('tasks/{id}', 'TasksController@viewTask');
+        $router->post('tasks', 'TasksController@create');
+        $router->put('tasks/{id}', 'TasksController@update');
 });
 
 $router->group(['prefix' => 'auth'], function () use ($router) {
