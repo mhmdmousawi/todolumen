@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class TaskUpdateRequestDTOFactory
 {
-    public function update(Request $request): TaskUpdateRequestDTO
+    public function create(Request $request): TaskUpdateRequestDTO
     {
         return new TaskUpdateRequestDTO(
             $request->input('name'),

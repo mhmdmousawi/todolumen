@@ -86,7 +86,7 @@ class TasksController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
-            'category_id' => 'nullable|int|exists:category,id'
+            'category_id' => 'nullable|int|exists:categories,id'
         ]);
 
         $taskRequestDTO = $this->taskRequestDTOFactory->create($request);
@@ -140,13 +140,33 @@ class TasksController extends Controller
             return $this->createValidationErrorView($validator->errors());
         }
 
-        $taskRequestDTO = $this->taskUpdateRequestDTOFactory->update($request);
+        $taskRequestDTO = $this->taskUpdateRequestDTOFactory->create($request);
 
         $taskResponseDTO = $this->taskResponseDTOFactory->create(
             $this->taskUpdater->update($task, $taskRequestDTO)
         );
 
         return $this->view($taskResponseDTO, Response::HTTP_OK);
+    }
+
+    public function delete(int $id): JsonResponse
+    {
+        $task = Task::find($id);
+
+        if (!$task) {
+            return $this->createGenericErrorView("No task with this id", Response::HTTP_BAD_REQUEST);
+        }
+
+        if ($task->user_id !== $this->loggedInUser->id) {
+            return $this->createGenericErrorView(
+                "Task does not belong to you",
+                Response::HTTP_UNAUTHORIZED
+            );
+        }
+
+        $task->delete();
+
+        return $this->view(null, Response::HTTP_NO_CONTENT);
     }
 
     public function list(Request $request, TasksFilter $filter): JsonResponse

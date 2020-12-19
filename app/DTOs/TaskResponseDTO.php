@@ -31,11 +31,10 @@ class TaskResponseDTO
      */
     public $time;
 
-    // @TODO add category DTO
     /**
-     * @var int|null
+     * @var CategoryResponseDTO|null
      */
-    public $categoryId;
+    public $category;
 
     /**
      * @var DateTimeImmutable
@@ -53,7 +52,7 @@ class TaskResponseDTO
         ?string $description,
         string $status,
         ?DateTimeImmutable $time,
-        ?int $categoryId,
+        ?CategoryResponseDTO $category,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt
     ) {
@@ -62,7 +61,7 @@ class TaskResponseDTO
         $this->description = $description;
         $this->status = $status;
         $this->time = $time;
-        $this->categoryId = $categoryId;
+        $this->category = $category;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
     }

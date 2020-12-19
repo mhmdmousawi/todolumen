@@ -15,14 +15,14 @@ class TaskUpdateRequestDTO extends TaskRequestDTO
         string $name,
         ?string $description,
         ?DateTimeImmutable $time,
-        ?int $categoryId,
+        ?CategoryRequestDTO $category,
         string $status
     ) {
         parent::__construct(
             $name,
             $description,
             $time,
-            $categoryId
+            $category
         );
 
         $this->status = $status;

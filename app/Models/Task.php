@@ -19,12 +19,17 @@ class Task extends Model
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
             'status' => [Rule::in(TaskStatusDictionary::getAll())],
-            'category_id' => 'nullable|int|exists:category,id'
+            'category_id' => 'nullable|int|exists:categories,id'
         ];
     }
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }
