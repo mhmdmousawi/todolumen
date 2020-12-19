@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 
 class JWTAuthController extends Controller
 {
@@ -57,7 +58,7 @@ class JWTAuthController extends Controller
 
         $credentials = $request->only(['email', 'password']);
 
-        if (!$token = Auth::attempt($credentials)) {
+        if (!$token = Auth::attempt($credentials, true)) {
             return $this->createGenericErrorView('Unauthorized', Response::HTTP_UNAUTHORIZED);
         }
 
@@ -75,7 +76,8 @@ class JWTAuthController extends Controller
         return $this->view(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function refresh() {
+    public function refresh()
+    {
         try {
             $token = Auth::guard('api')->refresh();
         } catch (Exception $e) {
@@ -83,5 +85,44 @@ class JWTAuthController extends Controller
         }
 
         return $this->respondWithToken($token);
+    }
+
+    public function forgetPassword(Request $request): JsonResponse
+    {
+        $this->validate($request, [
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        Password::sendResetLink(['email' => $request->input('email')]);
+
+        return $this->view(
+            ['message' => "Email has successfully been sent, please check your inbox."],
+            Response::HTTP_OK
+        );
+    }
+
+    public function resetPassword(Request $request): JsonResponse
+    {
+        $this->validate($request, [
+            'email' => 'required|email|exists:users',
+            'password' => 'required|confirmed',
+            'token' => 'required|string'
+        ]);
+
+        $emailPasswordStatus = Password::reset(
+            $request->only(['email', 'password', 'token']),
+            function ($user, $password) {
+                $user->password = app('hash')->make($password);
+                $user->save();
+        });
+
+        if (Password::INVALID_TOKEN === $emailPasswordStatus) {
+            return $this->createGenericErrorView('Invalid token!', Response::HTTP_UNAUTHORIZED);
+        }
+
+        return $this->view(
+            ['message' => "Password successfully changed"],
+            Response::HTTP_OK
+        );
     }
 }

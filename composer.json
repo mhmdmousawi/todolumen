@@ -7,8 +7,11 @@
     "require": {
         "php": "^7.3|^8.0",
         "elemenx/laravel-api-pagination": "^0.1.6",
+        "guzzlehttp/guzzle": "^7.2",
         "illuminate/mail": "^8.19",
+        "illuminate/notifications": "^8.19",
         "laravel/lumen-framework": "^8.0",
+        "ramsey/uuid": "^4.1",
         "spatie/data-transfer-object": "^1.13",
         "thedevsaddam/lumen-route-list": "^2.0",
         "tymon/jwt-auth": "dev-develop"
