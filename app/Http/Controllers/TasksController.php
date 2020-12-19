@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\DTOFactories\PaginatedDTOFactory;
-use App\DTOFactories\TaskRequestDTOFactory;
-use App\DTOFactories\TaskResponseDTOFactory;
-use App\DTOFactories\TaskUpdateRequestDTOFactory;
+use App\DTOFactories\Task\TaskRequestDTOFactory;
+use App\DTOFactories\Task\TaskResponseDTOFactory;
+use App\DTOFactories\Task\TaskUpdateRequestDTOFactory;
 use App\Http\Filters\TasksFilter;
 use App\Models\Task;
 use App\Models\User;
@@ -85,6 +85,7 @@ class TasksController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
+            'time' => 'nullable|date',
             'description' => 'nullable|string|max:65535',
             'category_id' => 'nullable|int|exists:categories,id'
         ]);

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\User;
+namespace App\Services;
 
-use App\DTOs\User\Request\UserRequestDTO;
+use App\DTOs\User\UserRequestDTO;
 use App\Events\UserRegisteredEvent;
 use App\Models\User;
 use Illuminate\Support\Facades\Event;

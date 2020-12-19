@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTOFactories\User\Response;
+namespace App\DTOFactories\User;
 
-use App\DTOs\User\Response\UserResponseDTO;
+use App\DTOs\User\UserResponseDTO;
 use App\Models\User;
 
 class UserResponseDTOFactory

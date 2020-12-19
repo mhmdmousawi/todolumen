@@ -1,6 +1,8 @@
 <?php
 
-namespace App\DTOs\User\Response;
+namespace App\DTOs\User;
+
+use DateTimeImmutable;
 
 class UserResponseDTO
 {
@@ -30,7 +32,7 @@ class UserResponseDTO
     public $mobileNumber;
 
     /**
-     * @var int|null
+     * @var DateTimeImmutable|null
      */
     public $birthday;
 
@@ -94,12 +96,12 @@ class UserResponseDTO
         return $this;
     }
 
-    public function getBirthday(): ?int
+    public function getBirthday(): ?DateTimeImmutable
     {
         return $this->birthday;
     }
 
-    public function setBirthday(?int $birthday): self
+    public function setBirthday(?DateTimeImmutable $birthday): self
     {
         $this->birthday = $birthday;
 

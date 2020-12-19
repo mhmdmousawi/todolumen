@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\DTOs\CategoryRequestDTO;
+use App\DTOs\Category\CategoryRequestDTO;
 use App\Models\Category;
 
 class CategoryUpdater

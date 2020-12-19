@@ -1,11 +1,10 @@
 <?php
 
-namespace App\DTOs\User\Request;
+namespace App\DTOs\User;
 
-use Illuminate\Http\Request;
-use Spatie\DataTransferObject\DataTransferObject;
+use DateTimeImmutable;
 
-class UserRequestDTO extends DataTransferObject
+class UserRequestDTO
 {
     /**
      * @var string
@@ -33,9 +32,26 @@ class UserRequestDTO extends DataTransferObject
     public $mobileNumber;
 
     /**
-     * @var int|null
+     * @var DateTimeImmutable|null
      */
     public $birthday;
+
+
+    public function __construct(
+        string $firstName,
+        string $lastName,
+        string $email,
+        string $password,
+        ?string $mobileNumber,
+        ?DateTimeImmutable $birthday
+    ) {
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->email = $email;
+        $this->password = $password;
+        $this->mobileNumber = $mobileNumber;
+        $this->birthday = $birthday;
+    }
 
     public function getFirstName(): string
     {
@@ -62,20 +78,8 @@ class UserRequestDTO extends DataTransferObject
         return $this->mobileNumber;
     }
 
-    public function getBirthday(): ?int
+    public function getBirthday(): ?DateTimeImmutable
     {
         return $this->birthday;
-    }
-
-    public static function fromRequest(Request $request): self
-    {
-        return new static([
-            'firstName' => $request->input('firstName'),
-            'lastName' => $request->input('lastName'),
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-            'mobileNumber' => $request->input('mobileNumber'),
-            'birthday' => $request->input('birthday'),
-        ]);
     }
 }

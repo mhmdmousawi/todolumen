@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\DTOFactories;
-
 
 use App\DTOs\PaginatedDTO;
 

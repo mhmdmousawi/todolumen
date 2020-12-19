@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTOFactories;
+namespace App\DTOFactories\Category;
 
-use App\DTOs\CategoryRequestDTO;
+use App\DTOs\Category\CategoryRequestDTO;
 use Illuminate\Http\Request;
 
 class CategoryRequestDTOFactory

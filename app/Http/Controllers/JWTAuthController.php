@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\DTOFactories\User\Response\UserResponseDTOFactory;
-use App\DTOs\User\Request\UserRequestDTO;
-use App\Services\User\UserCreator;
+use App\DTOFactories\User\UserRequestDTOFactory;
+use App\DTOFactories\User\UserResponseDTOFactory;
+use App\Models\User;
+use App\Services\UserCreator;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
 
 class JWTAuthController extends Controller
 {
+    use ValidationTrait;
+
     /**
      * @var UserCreator
      */
@@ -24,26 +28,32 @@ class JWTAuthController extends Controller
      */
     private $userResponseDTOFactory;
 
-    public function __construct(UserCreator $userCreator, UserResponseDTOFactory $userResponseDTOFactory)
-    {
+    /**
+     * @var UserRequestDTOFactory
+     */
+    private $userRequestDTOFactory;
+
+    public function __construct(
+        UserCreator $userCreator,
+        UserResponseDTOFactory $userResponseDTOFactory,
+        UserRequestDTOFactory $userRequestDTOFactory
+    ) {
         $this->userCreator = $userCreator;
         $this->userResponseDTOFactory = $userResponseDTOFactory;
+        $this->userRequestDTOFactory = $userRequestDTOFactory;
     }
 
     public function register(Request $request): JsonResponse
     {
-        // @TODO refactot to receive a DTO and validate it
-        $this->validate($request, [
-            'firstName' => 'required|string',
-            'lastName' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
-            'birthday' => 'nullable|int'
-        ]);
-        $userRequestDTO = UserRequestDTO::fromRequest($request);
+        $validator = Validator::make($request->all(), User::rules());
+        if ($validator->fails()) {
+            return $this->createValidationErrorView($validator->errors());
+        }
 
         $userResponseDTO = $this->userResponseDTOFactory->create(
-            $this->userCreator->create($userRequestDTO)
+            $this->userCreator->create(
+                $this->userRequestDTOFactory->create($request)
+            )
         );
 
         return $this->view($userResponseDTO, Response::HTTP_CREATED);

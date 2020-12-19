@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTOFactories;
+namespace App\DTOFactories\Task;
 
-use App\DTOs\TaskRequestDTO;
+use App\DTOs\Task\TaskRequestDTO;
 use DateTimeImmutable;
 use Illuminate\Http\Request;
 

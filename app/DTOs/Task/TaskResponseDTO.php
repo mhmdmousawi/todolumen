@@ -1,7 +1,8 @@
 <?php
 
-namespace App\DTOs;
+namespace App\DTOs\Task;
 
+use App\DTOs\Category\CategoryResponseDTO;
 use DateTimeImmutable;
 
 class TaskResponseDTO

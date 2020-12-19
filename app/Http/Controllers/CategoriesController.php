@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\DTOFactories\CategoryRequestDTOFactory;
-use App\DTOFactories\CategoryResponseDTOFactory;
+use App\DTOFactories\Category\CategoryRequestDTOFactory;
+use App\DTOFactories\Category\CategoryResponseDTOFactory;
 use App\Exceptions\UnableToRemoveCategoryException;
 use App\Models\Category;
 use App\Models\User;

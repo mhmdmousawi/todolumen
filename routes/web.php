@@ -24,6 +24,7 @@ $router->group(['prefix' => 'auth'], function () use ($router) {
     $router->post('login', 'JWTAuthController@login');
     $router->post('logout', 'JWTAuthController@logout');
     $router->post('logout', 'JWTAuthController@logout');
+    $router->post('refresh', 'JWTAuthController@refresh');
 
     $router->post('password/forget', 'JWTAuthController@forgetPassword');
     $router->post('password/reset', [ 'as' => 'password.reset', 'uses' => 'JWTAuthController@resetPassword' ]);

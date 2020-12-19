@@ -1,8 +1,9 @@
 <?php
 
-namespace App\DTOFactories;
+namespace App\DTOFactories\Task;
 
-use App\DTOs\TaskResponseDTO;
+use App\DTOFactories\Category\CategoryResponseDTOFactory;
+use App\DTOs\Task\TaskResponseDTO;
 use App\Models\Category;
 use App\Models\Task;
 use DateTimeImmutable;
@@ -29,7 +30,7 @@ class TaskResponseDTOFactory
             $task->name,
             $task->description,
             $task->status,
-            $task->time,
+            new DateTimeImmutable($task->time),
             $category ? $this->categoryResponseDTOFactory->create($category): null,
             new DateTimeImmutable($task->created_at),
             new DateTimeImmutable($task->updated_at)

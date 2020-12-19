@@ -13,11 +13,12 @@ class Task extends Model
     use Paginatable;
     use Filterable;
 
-    public static function rules()
+    public static function rules(): array
     {
         return [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
+            'time' => 'nullable|date',
             'status' => [Rule::in(TaskStatusDictionary::getAll())],
             'category_id' => 'nullable|int|exists:categories,id'
         ];

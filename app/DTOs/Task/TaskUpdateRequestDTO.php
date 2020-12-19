@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs;
+namespace App\DTOs\Task;
 
 use DateTimeImmutable;
 
@@ -15,14 +15,14 @@ class TaskUpdateRequestDTO extends TaskRequestDTO
         string $name,
         ?string $description,
         ?DateTimeImmutable $time,
-        ?CategoryRequestDTO $category,
+        ?int $categoryId,
         string $status
     ) {
         parent::__construct(
             $name,
             $description,
             $time,
-            $category
+            $categoryId
         );
 
         $this->status = $status;

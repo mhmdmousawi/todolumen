@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTOFactories;
+namespace App\DTOFactories\Category;
 
-use App\DTOs\CategoryResponseDTO;
+use App\DTOs\Category\CategoryResponseDTO;
 use App\Models\Category;
 
 class CategoryResponseDTOFactory

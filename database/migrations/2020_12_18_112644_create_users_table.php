@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
         `email` VARCHAR(255) NOT NULL,
         `password` VARCHAR(255) NOT NULL,
         `mobile_number` VARCHAR(255) NOT NULL,
-        `birthday` BIGINT NULL,
+        `birthday` TIMESTAMP NULL,
         `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )

@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\DTOs\TaskUpdateRequestDTO;
+use App\DTOs\Task\TaskUpdateRequestDTO;
 use App\Models\Task;
 
 class TaskUpdater
