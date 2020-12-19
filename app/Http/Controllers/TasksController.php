@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOFactories\PaginatedDTOFactory;
 use App\DTOFactories\TaskRequestDTOFactory;
 use App\DTOFactories\TaskResponseDTOFactory;
 use App\DTOFactories\TaskUpdateRequestDTOFactory;
@@ -51,6 +52,11 @@ class TasksController extends Controller
     private $taskProvider;
 
     /**
+     * @var PaginatedDTOFactory
+     */
+    private $paginatedDTOFactory;
+
+    /**
      * @var User
      */
     private $loggedInUser;
@@ -61,6 +67,7 @@ class TasksController extends Controller
         TaskResponseDTOFactory $taskResponseDTOFactory,
         TaskCreator $taskCreator,
         TaskUpdater $taskUpdater,
+        PaginatedDTOFactory $paginatedDTOFactory,
         TaskProvider $taskProvider
     ) {
         $this->taskRequestDTOFactory = $taskRequestDTOFactory;
@@ -68,6 +75,7 @@ class TasksController extends Controller
         $this->taskResponseDTOFactory = $taskResponseDTOFactory;
         $this->taskCreator = $taskCreator;
         $this->taskUpdater = $taskUpdater;
+        $this->paginatedDTOFactory = $paginatedDTOFactory;
         $this->taskProvider = $taskProvider;
 
         $this->loggedInUser = auth()->user();
@@ -141,11 +149,18 @@ class TasksController extends Controller
         return $this->view($taskResponseDTO, Response::HTTP_OK);
     }
 
-    public function list(TasksFilter $filter): JsonResponse
+    public function list(Request $request, TasksFilter $filter): JsonResponse
     {
+        $paginatedResult = Task::query()->where('user_id', $this->loggedInUser->id)
+            ->filter($filter)
+            ->paginate($request->has('limit') ? (int) $request->input('limit') : 10);
+
+        $taskObjects = $this->taskProvider->provideFromArray($paginatedResult->toArray()['data']);
+
         return $this->view(
-            $this->taskResponseDTOFactory->createDTOs(
-                $this->taskProvider->provideByUserAndFilter($this->loggedInUser, $filter)
+            $this->paginatedDTOFactory->create(
+                $paginatedResult->toArray(),
+                $this->taskResponseDTOFactory->createDTOs($taskObjects)
             )
             , Response::HTTP_OK
         );
