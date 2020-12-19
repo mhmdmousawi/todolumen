@@ -3,7 +3,9 @@
 namespace App\Services\User;
 
 use App\DTOs\User\Request\UserRequestDTO;
+use App\Events\UserRegisteredEvent;
 use App\Models\User;
+use Illuminate\Support\Facades\Event;
 
 class UserCreator
 {
@@ -17,6 +19,8 @@ class UserCreator
         $user->mobile_number = $userRequestDTO->getMobileNumber();
         $user->birthday = $userRequestDTO->getBirthday();
         $user->save();
+
+        Event::dispatch(new UserRegisteredEvent($user));
 
         return $user;
     }
