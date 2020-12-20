@@ -34,6 +34,9 @@ docker-compose up -d --build database && docker-compose up -d --build app && doc
 
 later you can only use ``docker-compose up -d`` inside your root directory 
 
+Once you can access the web application throw the port defined in `docker-compose.yml` file port `:8990`
+and the database throw port `:8991`
+
 4. Access the container:
 ```bash
 docker exec -it lumen_app bash
