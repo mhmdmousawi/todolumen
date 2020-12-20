@@ -5,7 +5,7 @@ In this project we have created a RESTful API backend for a Todo application, ba
 This application allows you to manage todo tasks with all API that you might need to build a front end application.
 <br>
 In addition to the basic features, it has the following:
-- Reset Password Feature (By email)
+- Reset Password Feature (by email)
 - Sends email notification on registration
 - List Tasks with all filter, sort, and pagination features
 
@@ -31,6 +31,8 @@ cd todolumen
 ```bash
 docker-compose up -d --build database && docker-compose up -d --build app && docker-compose up -d --build web
 ```
+
+later you can only use ``docker-compose up -d`` inside your root directory 
 
 4. Access the container:
 ```bash
